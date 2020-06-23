@@ -14,10 +14,10 @@ class App extends React.Component {
       }
     }
   }
-
-  handleChangeType = () => {
+  //dropdown-menu
+  handleChangeType = (e) => {
     console.log("changed")
-    //this.setState(filters.type: string)
+    this.setState({filters:{type: e.target.value}})
   }
 
   onFindPetsClick = () => {
@@ -26,16 +26,19 @@ class App extends React.Component {
       url += "?type=cat"
     } else if (this.state.filters.type === "dog") {
       url += "?type=dog"
-    } else if (this.state.filters.type === "dog") {
+    } else if (this.state.filters.type === "micropig") {
       url += "?type=micropig"
     }
     
     fetch(url)
-    .then(resp => this.setState({pets: resp}))
+    .then(resp => resp.json())
+    .then(json => this.setState({pets: json}) )
   }
 
   onAdoptPet = (id) => {
-    this.state.pets.filter((pet) => {return pet.id === id})
+    let filteredPet = this.state.pets.filter(pet => pet.id === id)
+    filteredPet[0].isAdopted = true
+
   }
 
   render() {
@@ -47,10 +50,13 @@ class App extends React.Component {
         <div className="ui container">
           <div className="ui grid">
             <div className="four wide column">
-              <Filters onChangeType={this.handleChangeType}/>
+              <Filters 
+              onChangeType={this.handleChangeType} 
+              onFindPetsClick={this.onFindPetsClick}
+              />
             </div>
             <div className="twelve wide column">
-              <PetBrowser />
+              <PetBrowser onAdoptPet={this.onAdoptPet} />
             </div>
           </div>
         </div>
