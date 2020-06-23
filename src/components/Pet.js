@@ -3,7 +3,7 @@ import React from 'react'
 class Pet extends React.Component {
   render() {
     let {age, weight, type, name, isAdopted, gender} = this.props.pet
-    console.log(age, weight)
+    // console.log(age, weight)
     return (
       <div className="card">
         <div className="content">

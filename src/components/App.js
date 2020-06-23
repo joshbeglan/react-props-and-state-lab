@@ -16,7 +16,7 @@ class App extends React.Component {
   }
   //dropdown-menu
   handleChangeType = (e) => {
-    console.log("changed")
+    // console.log("changed")
     this.setState({filters:{type: e.target.value}})
   }
 
@@ -36,10 +36,17 @@ class App extends React.Component {
   }
 
   onAdoptPet = (id) => {
-    console.log("adopted", id)
-    let filteredPet = this.state.pets.filter(pet => pet.id === id)
-    filteredPet[0].isAdopted = true
-    this.setState({pets: [...this.state.pets, filteredPet[0]]})
+    // console.log("adopted", id)
+    let newPetsArr = [] 
+    this.state.pets.forEach(pet => {
+      if(pet.id === id){
+        pet.isAdopted = true
+      } 
+      newPetsArr.push(pet)
+    })
+    // let filteredPet = this.state.pets.filter(pet => pet.id === id)
+    // filteredPet[0].isAdopted = true
+    this.setState({pets: newPetsArr})
   }
 
   render() {
